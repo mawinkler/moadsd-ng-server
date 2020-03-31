@@ -40,41 +40,65 @@ uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
         gid: 1001
 ```
 ## Build
-If you only want to build the container image
+To build the container image run
 ```shell
 docker-compose build
 ```
-## Preexitsing MOADSD-NG, AWS or GCP Configuration Available
-If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise follow the steps below to create them with the available tool set within the moadsd-ng-server later on.
+## Get it up and Running
+Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, if you're alredy using MOADSD-NG, second when you're going to start from scratch.
 
-### Reuse AWS Configuration
+### Preexitsing MOADSD-NG, AWS or GCP Configuration Available
+If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise skip this chapter and proceed with the `Run`-chapter. Then follow the steps below to create the credentials and logins with the available tool set within the moadsd-ng-server later on.
+
+**Reuse AWS Configuration**
 ```shell
-cp -r ~/.aws ~/moadsd-ng-server/workdir/
-cp ~/.ssh/moadsd-ng ~/moadsd-ng-server/workdir/.ssh/moadsd-ng
+cp -r ~/.aws ~/moadsd-ng-server/workdir/ && \
+  mkdir -p ~/moadsd-ng-server/workdir/.ssh && \
+  chmod 700 ~/moadsd-ng-server/workdir/.ssh && \
+  cp ~/.ssh/id_rsa.pub ~/moadsd-ng-server/workdir/.ssh/id_rsa.pub && \
+  cp ~/.ssh/id_rsa ~/moadsd-ng-server/workdir/.ssh/id_rsa && \
+  cp ~/.ssh/moadsd-ng ~/moadsd-ng-server/workdir/.ssh/moadsd-ng
 ```
 
-### Reuse GCP Configuration
+**Reuse GCP Configuration**
 ```shell
 cp -r ~/.config ~/moadsd-ng-server/workdir/
 ```
 
-### Reuse MOADSD-NG Configuration
+**Reuse MOADSD-NG Configuration**
 ```shell
-cp -r ~/moadsd-ng ~/moadsd-ng-server/workdir/
-cp .vault-pass.txt ~/moadsd-ng-server/workdir/
-cp ansible.json ~/moadsd-ng-server/workdir/
+cp -r ~/moadsd-ng ~/moadsd-ng-server/workdir/ && \
+  cp ~/.vault-pass.txt ~/moadsd-ng-server/workdir/ && \
+  cp ~/ansible.json ~/moadsd-ng-server/workdir/
 ```
 
-## Run
-Run the server by (even without building it before)
+**Run moadsd-ng-server**
+
+Run the server with
 ```shell
-docker-compose run moadsd-ng-server /bin/bash
+docker-compose run moadsd-ng-server
 ```
+
+You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
+
+**Backup and Restore**
+
+Simply tar / zip the moadsd-ng-server directory. It contains everything which is required to restore or relocate the environment.
 
 ## Preparations Required when Starting from Scratch
 If you're starting from scratch you need to connect to your cloud account(s) now.
 
-### Google
+**Run moadsd-ng-server**
+
+First, run the server with
+```shell
+docker-compose run moadsd-ng-server
+```
+
+You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
+
+**Google**
+
 Now, we're connecting to your Google Cloud account and create a project.
 
 ```shell
@@ -128,9 +152,10 @@ $ gcloud services enable compute.googleapis.com
 Operation "operations/acf.6dd93cb1-644b-44a1-b85c-6388f4dd288e" finished successfully.
 ```
 
-**Next Step:** [Google GCP](https://github.com/mawinkler/moadsd-ng/wiki/Google-GCP)
+*Next Step:* [Google GCP](https://github.com/mawinkler/moadsd-ng/wiki/Google-GCP)
 
-### AWS
+**AWS**
+
 Use the configure option to continue with the AWS CLI configuration:
 ```shell
 $ aws configure
@@ -143,4 +168,9 @@ Default output format [None]: json
 ```
 Example for the default region would be `eu-central-1` or `eu-west-1`.
 
-**Next Step:** [Amazon AWS](https://github.com/mawinkler/moadsd-ng/wiki/Amazon-AWS)
+*Next Step:* [Amazon AWS](https://github.com/mawinkler/moadsd-ng/wiki/Amazon-AWS)
+
+
+**Backup and Restore**
+
+Simply tar / zip the moadsd-ng-server directory. It contains everything which is required to restore or relocate the environment.

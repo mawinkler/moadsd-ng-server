@@ -6,6 +6,7 @@ ARG group=ansible
 ARG uid
 ARG gid
 
+# root context
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 RUN addgroup -gid ${gid} ${group}
@@ -18,13 +19,16 @@ ARG WORKDIR=/home/${user}
 COPY add-apt-repository /usr/bin
 
 RUN apt update && \
-    apt install -y sudo vim jq wget curl ssh python3 software-properties-common git locales-all libffi6 libffi-dev libssl-dev && \
+    apt install -y sudo vim jq figlet wget curl ssh python3 software-properties-common git locales-all libffi6 libffi-dev libssl-dev && \
     add-apt-repository universe && \
     apt update && \
     apt install -y python3-pip
 
-RUN echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/custom-users
+RUN echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/custom-users && \
+    echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
+    figlet "MOADSD-NG Server" > /etc/motd
 
+# user context
 USER ${user}
 WORKDIR /home/${user}
 
@@ -51,5 +55,9 @@ RUN DEBIAN_FRONTEND="noninteractive" sudo apt install -y awscli && \
     pip3 install boto boto3 --user
 
 #RUN git clone https://github.com/mawinkler/moadsd-ng.git
+RUN tar cfz /tmp/ansible.tgz /home/ansible && \
+    echo "cat /etc/motd" >> .bashrc
 
 WORKDIR /home/${user}
+
+ENTRYPOINT ["/bin/bash"]
