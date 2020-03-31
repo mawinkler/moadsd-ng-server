@@ -13,12 +13,7 @@ services:
         uid: 1001
         gid: 1001
     volumes:
-      - /home/ansible/moadsd-ng-workdir/moadsd-ng:/home/ansible/moadsd-ng
-      - /home/ansible/moadsd-ng-workdir/ansible.json:/home/ansible/ansible.json
-      - /home/ansible/moadsd-ng-workdir/.vault-pass.txt:/home/ansible/.vault-pass.txt
-      - /home/ansible/moadsd-ng-workdir/.aws:/home/ansible/.aws
-      - /home/ansible/moadsd-ng-workdir/.config:/home/ansible/.config
-      # - /etc/localtime:/etc/localtime:ro
+      - ./workdir:/home/ansible
       - /etc/timezone:/etc/timezone:ro
     environment:
       - TZ=Europe/Berlin
