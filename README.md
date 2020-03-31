@@ -97,6 +97,23 @@ docker-compose run moadsd-ng-server
 
 You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
 
+**Generate ssh-keys**
+
+Generate ssh-keys without setting a passphrase
+```shell
+$ ssh-keygen
+```
+
+There will be two new files within the `/home/ansible/.ssh`-directory, the private and the public part of the keypair just generated.
+
+**Ansible Vault**
+
+For all credentials, the `ansible-vault` is used.
+Create a file called `.vault-pass.txt` in the home directory of the `ansible`user with a secret password.
+```shell
+$ echo '<YOUR VERY STRONG PASSWORD>' > ~/.vault-pass.txt
+$ chmod 600 ~/.vault-pass.txt
+```
 **Google**
 
 Now, we're connecting to your Google Cloud account and create a project.
