@@ -79,11 +79,7 @@ Run the server with
 docker-compose run moadsd-ng-server
 ```
 
-You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
-
-**Backup and Restore**
-
-Simply tar / zip the moadsd-ng-server directory. It contains everything which is required to restore or relocate the environment.
+For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
 ## Preparations Required when Starting from Scratch
 If you're starting from scratch you need to connect to your cloud account(s) now.
@@ -95,7 +91,7 @@ First, run the server with
 docker-compose run moadsd-ng-server
 ```
 
-You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
+For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
 **Generate ssh-keys**
 
@@ -187,6 +183,35 @@ Example for the default region would be `eu-central-1` or `eu-west-1`.
 
 *Next Step:* [Amazon AWS](https://github.com/mawinkler/moadsd-ng/wiki/Amazon-AWS)
 
+## House Keeping
+Assuming you are within the `moadsd-ng-server`directory.
+
+**Run moadsd-ng-server**
+
+Run the server with
+```shell
+docker-compose run moadsd-ng-server
+```
+
+You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
+
+**Exit from moadsd-ng-server**
+
+To exit the container environment press `^d`, the container will stay alive.
+
+**Attach to a running moadsd-ng-server**
+
+To attach to an already running instance run
+```shell
+./attach.sh
+```
+
+**Stop moadsd-ng-server**
+
+To stop a running instance run
+```shell
+./stop.sh
+```
 
 **Backup and Restore**
 
