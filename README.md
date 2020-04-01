@@ -24,20 +24,19 @@ git clone https://github.com/mawinkler/moadsd-ng-server.git
 ## Prepare the Build
 The user inside the docker container is *unprivileged* but needs read / write access to the workfir on the host. To enable this access the uid and gid of the ansible user inside the container must match the uid and gid of the user on the host.
 
-First, find your current uid and gid of your logged in user
+First, find your current uid of your logged in user
 ```shell
 id
 ```
 ```
 uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
 ```
---> The ids to put into the `docker-compose.yaml` are `1001` and `1001`
+--> The ids to put into the `docker-compose.yaml` are `1001`
 ```
     build:
       context: .
       args:
         uid: 1001
-        gid: 1001
 ```
 ## Build
 To build the container image run
