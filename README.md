@@ -62,14 +62,14 @@ cp -r ~/.aws ~/moadsd-ng-server/workdir/ && \
 
 **Reuse GCP Configuration**
 ```shell
-cp -r ~/.config ~/moadsd-ng-server/workdir/
+cp -r ~/.config ~/moadsd-ng-server/workdir/ && \
+cp ~/ansible.json ~/moadsd-ng-server/workdir/
 ```
 
 **Reuse MOADSD-NG Configuration**
 ```shell
 cp -r ~/moadsd-ng ~/moadsd-ng-server/workdir/ && \
-  cp ~/.vault-pass.txt ~/moadsd-ng-server/workdir/ && \
-  cp ~/ansible.json ~/moadsd-ng-server/workdir/
+  cp ~/.vault-pass.txt ~/moadsd-ng-server/workdir/
 ```
 
 **Run moadsd-ng-server**
