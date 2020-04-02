@@ -227,7 +227,7 @@ Please choose the playbook:
 5) deploy_gitlab_runners        10) configurator
 #? 10
 ```
-
+The Configurator does quite a few checks on your configuration and will complain when a misconfiguration got detected.
 
 ## House Keeping
 Assuming you are within the `moadsd-ng-server`directory.
