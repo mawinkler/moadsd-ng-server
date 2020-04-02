@@ -68,33 +68,16 @@ Depending on whether you start from scratch or have already played with MOADSD-N
 ### Preexitsing MOADSD-NG, AWS or GCP Configuration Available
 If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise skip this chapter and proceed with the `Run`-chapter. Then follow the steps below to create the credentials and logins with the available tool set within the moadsd-ng-server later on.
 
-**Reuse AWS Configuration**
+**Migration**
 ```shell
-cp -r ~/.aws ~/moadsd-ng-server/workdir/ && \
-  mkdir -p ~/moadsd-ng-server/workdir/.ssh && \
-  chmod 700 ~/moadsd-ng-server/workdir/.ssh && \
-  cp ~/.ssh/id_rsa.pub ~/moadsd-ng-server/workdir/.ssh/id_rsa.pub && \
-  cp ~/.ssh/id_rsa ~/moadsd-ng-server/workdir/.ssh/id_rsa && \
-  cp ~/.ssh/moadsd-ng ~/moadsd-ng-server/workdir/.ssh/moadsd-ng
-```
-
-**Reuse GCP Configuration**
-```shell
-cp -r ~/.config ~/moadsd-ng-server/workdir/ && \
-cp ~/ansible.json ~/moadsd-ng-server/workdir/
-```
-
-**Reuse MOADSD-NG Configuration**
-```shell
-cp -r ~/moadsd-ng ~/moadsd-ng-server/workdir/ && \
-  cp ~/.vault-pass.txt ~/moadsd-ng-server/workdir/
+./migrate.sh
 ```
 
 **Run moadsd-ng-server**
 
 Run the server with
 ```shell
-docker-compose run moadsd-ng-server
+./start.sh
 ```
 
 For more information on the moadsd-ng-server see the **House Keeping** chapter below.
@@ -106,23 +89,13 @@ If you're starting from scratch you need to connect to your cloud account(s) now
 
 First, run the server with
 ```shell
-docker-compose run moadsd-ng-server
-# or
 ./start.sh
 ```
 
 For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
-<!-- **Generate ssh-keys**
+**Get MOADSD-NG**
 
-Generate ssh-keys without setting a passphrase
-```shell
-ssh-keygen
-```
-
-There will be two new files within the `/home/ansible/.ssh`-directory, the private and the public part of the keypair just generated. -->
-
-## Get the MOADSD-NG
 Do a
 ```shell
 git clone -b configurator https://github.com/mawinkler/moadsd-ng.git
@@ -260,7 +233,7 @@ Assuming you are within the `moadsd-ng-server`directory.
 
 Run the server with
 ```shell
-docker-compose run moadsd-ng-server
+./start.sh
 ```
 
 You are now directly within your server environment where you can work with MOADSD-NG as before, but within an isolated and easy to move container.
@@ -268,13 +241,6 @@ You are now directly within your server environment where you can work with MOAD
 **Exit from moadsd-ng-server**
 
 To exit the container environment press `^d`, the container will stay alive.
-
-**Attach to a running moadsd-ng-server**
-
-To attach to an already running instance run
-```shell
-./attach.sh
-```
 
 **Stop moadsd-ng-server**
 
