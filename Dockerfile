@@ -39,7 +39,7 @@ RUN echo 'export PATH=$PATH:$HOME/.local/bin' >> /home/${user}/.bashrc && \
     wget https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg -O .ansible.cfg && \
     sed -i 's/^#stdout_callback = yaml/stdout_callback = yaml/g' .ansible.cfg && \
     sed -i 's/^#display_skipped_hosts = True/display_skipped_hosts = False/g' .ansible.cfg && \
-    sed -i 's/^#control_path_dir = \~\/\.ansible\/cp/control_path = \/dev\/shm\/cp%%h-%%p-%%r/g' && \
+    sed -i 's/^#control_path_dir = \~\/\.ansible\/cp/control_path = \/dev\/shm\/cp%%h-%%p-%%r/g' .ansible.cfg && \
     sed -i '23 a force_valid_group_names = ignore' .ansible.cfg && \
     mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keygen -q -f ~/.ssh/id_rsa  -P ""
 
