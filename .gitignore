@@ -1,6 +1,2 @@
-workdir/ansible.json
-workdir/.aws
-workdir/.config
-workdir/moadsd-ng
-workdir/.ssh
-workdir/.vault-pass.txt
+workdir/
+ansible.tgz

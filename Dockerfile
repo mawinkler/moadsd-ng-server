@@ -9,7 +9,7 @@ ARG gid
 # root context
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
-RUN addgroup -gid ${gid} ${group}
+RUN addgroup -gid ${gid} ${group} || true
 RUN useradd -m -s /bin/bash -d /home/${user} -u ${uid} -g ${gid} ${user}
 
 LABEL Description="This is the Ansible Server for MOADSD-NG"
@@ -55,7 +55,7 @@ RUN DEBIAN_FRONTEND="noninteractive" sudo apt install -y awscli && \
     pip3 install boto boto3 --user
 
 #RUN git clone https://github.com/mawinkler/moadsd-ng.git
-RUN tar cfz /tmp/ansible.tgz /home/ansible && \
+RUN tar cpzf /tmp/ansible.tgz /home/ansible && \
     echo "cat /etc/motd" >> .bashrc
 
 WORKDIR /home/${user}

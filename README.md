@@ -26,6 +26,7 @@ The user inside the docker container is *unprivileged* but needs read / write ac
 
 First, find your current uid of your logged in user
 ```shell
+# Example from a linux environment
 id
 ```
 ```
@@ -39,11 +40,28 @@ uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
         uid: 1001
         gid: 1001
 ```
+```shell
+# Example from a Mac OS X environment
+id
+```
+```
+uid=501(markus) gid=20(staff) groups=20(staff), ...
+```
+--> The ids to put into the `docker-compose.yaml` are `1001` and `1001`
+```
+    build:
+      context: .
+      args:
+        uid: 501
+        gid: 20
+```
 ## Build
 To build the container image run
 ```shell
-docker-compose build
+./build.sh
 ```
+This script will build the container image, fetch the generated `/home/ansible`-directory and finally populates the `./workdir`.
+
 ## Get it up and Running
 Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, if you're alredy using MOADSD-NG, second when you're going to start from scratch.
 
@@ -89,26 +107,35 @@ If you're starting from scratch you need to connect to your cloud account(s) now
 First, run the server with
 ```shell
 docker-compose run moadsd-ng-server
+# or
+./start.sh
 ```
 
 For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
-**Generate ssh-keys**
+<!-- **Generate ssh-keys**
 
 Generate ssh-keys without setting a passphrase
 ```shell
-$ ssh-keygen
+ssh-keygen
 ```
 
-There will be two new files within the `/home/ansible/.ssh`-directory, the private and the public part of the keypair just generated.
+There will be two new files within the `/home/ansible/.ssh`-directory, the private and the public part of the keypair just generated. -->
+
+## Get the MOADSD-NG
+Do a
+```shell
+git clone -b configurator https://github.com/mawinkler/moadsd-ng.git
+cd moadsd-ng
+```
 
 **Ansible Vault**
 
 For all credentials, the `ansible-vault` is used.
 Create a file called `.vault-pass.txt` in the home directory of the `ansible`user with a secret password.
 ```shell
-$ echo '<YOUR VERY STRONG PASSWORD>' > ~/.vault-pass.txt
-$ chmod 600 ~/.vault-pass.txt
+echo '<YOUR VERY STRONG PASSWORD>' > ~/.vault-pass.txt
+chmod 600 ~/.vault-pass.txt
 ```
 **Google**
 
@@ -130,17 +157,18 @@ Finally configure the default GCE region name.
 Next, we will create a service account with owner permissions for the project.
 
 ```shell
-$ gcloud iam service-accounts create ansible \
-    --display-name "Ansible Account"
-$ gcloud iam service-accounts keys create ~/ansible.json \
-    --iam-account=ansible@<project id>.iam.gserviceaccount.com
-$ gcloud projects add-iam-policy-binding <project id> \
-    --member='serviceAccount:ansible@<project id>.iam.gserviceaccount.com' \
-    --role='roles/owner'
+export PROJECT_ID=<project-id>
+gcloud iam service-accounts create ansible \
+  --display-name "Ansible Account"
+gcloud iam service-accounts keys create ~/ansible.json \
+  --iam-account=ansible@${PROJECT_ID}.iam.gserviceaccount.com
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member="serviceAccount:ansible@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/owner"
 ```
 Now, we need to enable billing and afterwards the compute API within our project. For that, we first need to look up available billing accounts.
 ```shell
-$ gcloud alpha billing accounts list
+gcloud alpha billing accounts list
 ```
 ```
 ACCOUNT_ID            NAME                 OPEN  MASTER_ACCOUNT_ID
@@ -148,18 +176,18 @@ ACCOUNT_ID            NAME                 OPEN  MASTER_ACCOUNT_ID
 ```
 We now link that billing account to our project.
 ```shell
-$ gcloud alpha billing projects link <project id> \
-    --billing-account 019XXX-6XXXX9-4XXXX1
+gcloud alpha billing projects link ${PROJECT_ID} \
+  --billing-account 019XXX-6XXXX9-4XXXX1
 ```
 ```
 billingAccountName: billingAccounts/019XXX-6XXXX9-4XXXX1
 billingEnabled: true
-name: projects/<project id>/billingInfo
-projectId: <project id>
+name: projects/<project-id>/billingInfo
+projectId: <project-id>
 ```
-And finally enable the API.
+And finally enable the API which may take a minute or two.
 ```shell
-$ gcloud services enable compute.googleapis.com
+gcloud services enable compute.googleapis.com
 ```
 ```
 Operation "operations/acf.6dd93cb1-644b-44a1-b85c-6388f4dd288e" finished successfully.
@@ -171,7 +199,7 @@ Operation "operations/acf.6dd93cb1-644b-44a1-b85c-6388f4dd288e" finished success
 
 Use the configure option to continue with the AWS CLI configuration:
 ```shell
-$ aws configure
+aws configure
 ```
 ```
 AWS Access Key ID [None]: <access key>
@@ -181,7 +209,49 @@ Default output format [None]: json
 ```
 Example for the default region would be `eu-central-1` or `eu-west-1`.
 
-*Next Step:* [Amazon AWS](https://github.com/mawinkler/moadsd-ng/wiki/Amazon-AWS)
+When using windows instances within AWS EC2 we need to have an keypair to do an initial password change for the administrator. To create it do the following:
+```shell
+aws ec2 create-key-pair --key-name moadsd-ng | \
+  jq -r '.KeyMaterial' > ~/.ssh/moadsd-ng
+chmod 600 ~/.ssh/moadsd-ng
+```
+If AWS complains that the keypair already exists simply change the `--key-name moadsd-ng` to something different like `--key-name moadsd-ng-server`.
+We now have a private key which allows us to authenticate to the instances.
+
+**Configurator**
+
+Last step for the preparation is to configure MOADSD-NG. We do that by the use of the build-in configurator.
+
+First, we create our `configuration.yml` file.
+```shell
+cp configuration.yml.sample configuration.yml
+vi configuration.yml
+```
+Within the sample configuration, a standard Kubernets cluster is defined to which Smart Check, Jenkins, Prometheus and Grafana are getting deployed. Minimal settings to be defined by you are marked with **MANDATORY**.
+All other settings available for the configurator can be reviewed within the default-file.
+```
+cat roles/configurator/defaults/main.yml
+```
+*Please, do not change that file!!*
+
+To change settings for your MOADSD-NG overwrite the values as required within your `configuration.yml` and rerun the configurator.
+
+To run the configurator call the menu of MOADSD-NG, select the cloud and choose configurator.
+```shell
+./menu.sh
+Please choose the target environment:
+1) gcp		  3) esx	          5) switch_to_gcp  7) switch_to_esx
+2) aws		  4) site_secrets   6) switch_to_aws
+#? 1
+Please choose the playbook:
+1) site				                 6) pause
+2) deploy			                 7) resume
+3) deploy_endpoints		         8) terminate
+4) jenkins_create_credentials	 9) terminate_site
+5) deploy_gitlab_runners	    10) configurator
+#? 10
+```
+
 
 ## House Keeping
 Assuming you are within the `moadsd-ng-server`directory.
