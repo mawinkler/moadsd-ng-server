@@ -1,8 +1,11 @@
 #!/bin/bash
-# mkdir -p workdir/.ssh
-# touch ./workdir/.ssh/id_rsa
-# touch ./workdir/.ssh/id_rsa.pub
-# touch ./workdir/moadsd-ng
-# touch ./workdir/ansible.json
-# touch ./workdir/.vault-pass.txt
-docker-compose run moadsd-ng-server
+CONTAINER=$(docker ps --format "{{.Names}}" | grep moadsd-ng-server)
+
+if [ $CONTAINER ]
+then
+  echo Attaching to Running Instance
+  docker attach ${CONTAINER}
+else
+  echo Creating new Instance
+  docker-compose run moadsd-ng-server
+fi

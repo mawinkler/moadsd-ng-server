@@ -10,18 +10,10 @@ services:
     build:
       context: .
       args:
-        uid: 501
-        gid: 20
+        uid: 1001
+        gid: 1001
     volumes:
       - ./workdir:/home/ansible
-      # - ./workdir/moadsd-ng:/home/ansible/moadsd-ng
-      # - ./workdir/ansible.json:/home/ansible/ansible.json
-      # - ./workdir/.vault-pass.txt:/home/ansible/.vault-pass.txt
-      # - ./workdir/.aws:/home/ansible/.aws
-      # - ./workdir/.config:/home/ansible/.config
-      # - ./workdir/.ssh/moadsd-ng:/home/ansible/.ssh/moadsd-ng
-      # - ./workdir/.ssh/id_rsa:/home/ansible/.ssh/id_rsa
-      # - ./workdir/.ssh/id_rsa.pub:/home/ansible/.ssh/id_rsa.pub
       # - type: bind
       #   source: /etc/timezone
       #   target: /etc/timezone
