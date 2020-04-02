@@ -31,7 +31,7 @@ id
 ```
 uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
 ```
---> The ids to put into the `docker-compose.yaml` are `1001`
+--> The ids to put into the `docker-compose.yaml` are `1001` and `1001`
 ```
     build:
       context: .
