@@ -206,6 +206,8 @@ All other settings available for the configurator can be reviewed within the def
 ```
 cat roles/configurator/defaults/main.yml
 ```
+*Please, do not change that file!!*
+
 Finaly, you should encrypt your configuration.yml by doing
 ```shell
 ansible-vault encrypt --vault-password-file \
@@ -216,7 +218,6 @@ From then on, you can edit the configuration by
 ansible-vault edit --vault-password-file \
   ../.vault-pass.txt configuration.yml
 ```
-*Please, do not change that file!!*
 
 To change settings for your MOADSD-NG overwrite the values as required within your `configuration.yml` and rerun the configurator.
 
