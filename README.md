@@ -9,8 +9,11 @@ This repository provides a server container image for MOADSD-NG. The core compon
 Persistence is provided by a mapped working directory on your docker host. That means, you can easily destroy and rebuild the image whenever needed. If you want to move your setup, simply tar / zip your local repo directory including the workdir.
 
 ## Prerequisites
-* Docker Engine and
-* Docker-Compose
+Docker & Docker-Compose
+
+Tested with Linux and Mac OS X (Docker for Desktop)
+
+Untested with Docker for Windows
 
 ## Get the MOADSD-NG-SERVER
 Either download it directly from GitHub
@@ -213,15 +216,15 @@ To run the configurator call the menu of MOADSD-NG, select the cloud and choose 
 ```shell
 ./menu.sh
 Please choose the target environment:
-1) gcp		  3) esx	          5) switch_to_gcp  7) switch_to_esx
-2) aws		  4) site_secrets   6) switch_to_aws
+1) gcp          3) esx          5) switch_to_gcp    7) switch_to_esx
+2) aws          4) site_secrets 6) switch_to_aws
 #? 1
 Please choose the playbook:
-1) site				                 6) pause
-2) deploy			                 7) resume
-3) deploy_endpoints		         8) terminate
-4) jenkins_create_credentials	 9) terminate_site
-5) deploy_gitlab_runners	    10) configurator
+1) site                         6) pause
+2) deploy                       7) resume
+3) deploy_endpoints             8) terminate
+4) jenkins_create_credentials   9) terminate_site
+5) deploy_gitlab_runners        10) configurator
 #? 10
 ```
 
