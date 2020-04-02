@@ -68,7 +68,7 @@ This script will build the container image, fetch the generated `/home/ansible`-
 ## Get it up and Running
 Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, if you're alredy using MOADSD-NG, second when you're going to start from scratch.
 
-### Preexitsing MOADSD-NG, AWS or GCP Configuration Available
+### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
 If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise skip this chapter and proceed with the `Run`-chapter. Then follow the steps below to create the credentials and logins with the available tool set within the moadsd-ng-server later on.
 
 **Migration**
@@ -168,8 +168,6 @@ gcloud services enable compute.googleapis.com
 ```
 Operation "operations/acf.6dd93cb1-644b-44a1-b85c-6388f4dd288e" finished successfully.
 ```
-
-*Next Step:* [Google GCP](https://github.com/mawinkler/moadsd-ng/wiki/Google-GCP)
 
 **AWS**
 
