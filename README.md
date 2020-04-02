@@ -37,6 +37,7 @@ uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
       context: .
       args:
         uid: 1001
+        gid: 1001
 ```
 ## Build
 To build the container image run
