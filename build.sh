@@ -12,4 +12,5 @@ echo $'\nStopping MOADSD-NG-SERVER Container'
 docker stop $(docker ps --format "{{.Names}}" | grep moadsd-ng-server)
 
 echo $'\nPopulating workdir'
-tar --same-owner xzf ansible.tgz --strip-components=2 -C ./workdir
+mkdir -p workdir
+tar xpzf ansible.tgz --strip-components=2 -C ./workdir
