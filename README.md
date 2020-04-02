@@ -9,8 +9,11 @@ This repository provides a server container image for MOADSD-NG. The core compon
 Persistence is provided by a mapped working directory on your docker host. That means, you can easily destroy and rebuild the image whenever needed. If you want to move your setup, simply tar / zip your local repo directory including the workdir.
 
 ## Prerequisites
-* Docker Engine and
-* Docker-Compose
+Docker & Docker-Compose
+
+Tested with Linux and Mac OS X (Docker for Desktop)
+
+Untested with Docker for Windows
 
 ## Get the MOADSD-NG-SERVER
 Either download it directly from GitHub
@@ -65,7 +68,7 @@ This script will build the container image, fetch the generated `/home/ansible`-
 ## Get it up and Running
 Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, if you're alredy using MOADSD-NG, second when you're going to start from scratch.
 
-### Preexitsing MOADSD-NG, AWS or GCP Configuration Available
+### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
 If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise skip this chapter and proceed with the `Run`-chapter. Then follow the steps below to create the credentials and logins with the available tool set within the moadsd-ng-server later on.
 
 **Migration**
@@ -166,8 +169,6 @@ gcloud services enable compute.googleapis.com
 Operation "operations/acf.6dd93cb1-644b-44a1-b85c-6388f4dd288e" finished successfully.
 ```
 
-*Next Step:* [Google GCP](https://github.com/mawinkler/moadsd-ng/wiki/Google-GCP)
-
 **AWS**
 
 Use the configure option to continue with the AWS CLI configuration:
@@ -223,18 +224,18 @@ To run the configurator call the menu of MOADSD-NG, select the cloud and choose 
 ```shell
 ./menu.sh
 Please choose the target environment:
-1) gcp		  3) esx	          5) switch_to_gcp  7) switch_to_esx
-2) aws		  4) site_secrets   6) switch_to_aws
+1) gcp          3) esx          5) switch_to_gcp    7) switch_to_esx
+2) aws          4) site_secrets 6) switch_to_aws
 #? 1
 Please choose the playbook:
-1) site				                 6) pause
-2) deploy			                 7) resume
-3) deploy_endpoints		         8) terminate
-4) jenkins_create_credentials	 9) terminate_site
-5) deploy_gitlab_runners	    10) configurator
+1) site                         6) pause
+2) deploy                       7) resume
+3) deploy_endpoints             8) terminate
+4) jenkins_create_credentials   9) terminate_site
+5) deploy_gitlab_runners        10) configurator
 #? 10
 ```
-
+The Configurator does quite a few checks on your configuration and will complain when a misconfiguration got detected.
 
 ## House Keeping
 Assuming you are within the `moadsd-ng-server`directory.
