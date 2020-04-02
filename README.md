@@ -201,9 +201,19 @@ cp configuration.yml.sample configuration.yml
 vi configuration.yml
 ```
 Within the sample configuration, a standard Kubernets cluster is defined to which Smart Check, Jenkins, Prometheus and Grafana are getting deployed. Minimal settings to be defined by you are marked with **MANDATORY**.
-All other settings available for the configurator can be reviewed within the default-file.
+All other settings available for the configurator can be reviewed within the default-file:
 ```
 cat roles/configurator/defaults/main.yml
+```
+Finaly, you should encrypt your configuration.yml by doing
+```shell
+ansible-vault encrypt --vault-password-file \
+  ../.vault-pass.txt configuration.yml
+```
+From then on, you can edit the configuration by
+```shell
+ansible-vault edit --vault-password-file \
+  ../.vault-pass.txt configuration.yml
 ```
 *Please, do not change that file!!*
 
