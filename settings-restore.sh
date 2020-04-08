@@ -5,8 +5,8 @@ AWS=.aws
 GCP=.config
 
 echo "Restoring Backup ${BACKUP_DIR}"
-mkdir -p "${BACKUP_DIR}/.ssh"
-mkdir -p "${BACKUP_DIR}/moadsd-ng"
+mkdir -p "${WORK_DIR}/.ssh"
+mkdir -p "${WORK_DIR}/moadsd-ng"
 
 cp ${BACKUP_DIR}/.ssh/id_rsa.pub ${WORK_DIR}/.ssh/id_rsa.pub
 cp ${BACKUP_DIR}/.ssh/id_rsa ${WORK_DIR}/.ssh/id_rsa
