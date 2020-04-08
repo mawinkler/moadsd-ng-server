@@ -101,7 +101,7 @@ For more information on the moadsd-ng-server see the **House Keeping** chapter b
 
 Do a
 ```shell
-git clone -b configurator https://github.com/mawinkler/moadsd-ng.git
+git clone https://github.com/mawinkler/moadsd-ng.git
 cd moadsd-ng
 ```
 
@@ -261,6 +261,33 @@ To stop a running instance run
 ./stop.sh
 ```
 
-**Backup and Restore**
+**Backup Settings**
 
-Simply tar / zip the moadsd-ng-server directory. It contains everything which is required to restore or relocate the environment.
+Backup your settings with
+```shell
+./settings-backup.sh
+```
+A directory named `backup-YYYY-MM-DD_HH-MM` will be created containing all relevant configurations.
+
+**Restore Settings**
+
+If you want to overwrite your current configuration with a backuped one do the following.
+```shell
+./settings-restore.sh <backup-YYYY-MM-DD_HH-MM>
+./start.sh
+cd ~/moadsd-ng
+```
+And finally run the configurator via the menu.
+
+If you're restarting from scratch or killed the workdir, it's a little more complicated because we need to fetch moadsd-ng.
+```shell
+./build.sh
+./start.sh
+git clone https://github.com/mawinkler/moadsd-ng.git
+exit
+./settings-restore.sh <backup-YYYY-MM-DD_HH-MM>
+./start.sh
+cd ~/moadsd-ng
+```
+
+You can also do a full backup simply tar / zip the moadsd-ng-server directory. It contains everything which is required to restore or relocate the environment.
