@@ -22,5 +22,8 @@ fi
 if test -f "${BACKUP_DIR}/ansible.json"; then
   cp ${BACKUP_DIR}/ansible.json ${WORK_DIR}/ansible.json
 fi
+if test -f "${BACKUP_DIR}/.gitconfig"; then
+  cp ${BACKUP_DIR}/.gitconfig ${WORK_DIR}/.gitconfig
+fi
 cp ${BACKUP_DIR}/moadsd-ng/configuration.yml ${WORK_DIR}/moadsd-ng/
 cp ${BACKUP_DIR}/.vault-pass.txt ${WORK_DIR}/
