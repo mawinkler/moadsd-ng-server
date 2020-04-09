@@ -14,3 +14,4 @@ docker stop $(docker ps --format "{{.Names}}" | grep moadsd-ng-server)
 echo $'\nPopulating workdir'
 mkdir -p workdir
 tar xpzf ansible.tgz --strip-components=2 -C ./workdir
+rm ansible.tgz
