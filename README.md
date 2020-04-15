@@ -50,7 +50,7 @@ id
 ```
 uid=501(markus) gid=20(staff) groups=20(staff), ...
 ```
---> The ids to put into the `docker-compose.yaml` are `1001` and `1001`
+--> The ids to put into the `docker-compose.yaml` are `501` and `20`
 ```
     build:
       context: .
