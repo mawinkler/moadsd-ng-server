@@ -11,9 +11,23 @@ Persistence is provided by a mapped working directory on your docker host. That 
 ## Prerequisites
 Docker & Docker-Compose
 
-Tested with Linux and Mac OS X (Docker for Desktop)
+Tested with Linux, Mac OS X with Docker for Desktop and AWS Cloud9
+### Linux
+Requirements for Docker & Docker-Compose
+### Mac OS X
+Requirements Docker for Desktop
+### Cloud9
+Cloud9 Configuration:
+* Name: \<whatever-you-like\>
+* Instance type: >= t3.small
+* Platform: Ubuntu Server 18.04-LTS
 
-Untested with Docker for Windows
+From within the Cloud9 shell to a
+```shell
+sudo apt install -y docker-compose
+```
+### Windows
+Requirements for Docker for Windows - untested
 
 ## Get the MOADSD-NG-SERVER
 Either download it directly from GitHub
