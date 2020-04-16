@@ -1,7 +1,7 @@
 #!/bin/bash
 CONTAINER=$(docker ps --format "{{.Names}}" | grep moadsd-ng-server)
 
-if [ $CONTAINER ]
+if [ ${CONTAINER} ]
 then
   echo Attaching to Running Instance
   docker attach ${CONTAINER}
