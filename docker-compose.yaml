@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.4"
 services:
 
 # ##########################################################################
@@ -14,10 +14,6 @@ services:
         gid: 1001
     volumes:
       - ./workdir:/home/ansible
-      # - type: bind
-      #   source: /etc/timezone
-      #   target: /etc/timezone
-      #   read_only: true
     environment:
       - TZ=Europe/Berlin
       - DEBIAN_FRONTEND=noninteractive
