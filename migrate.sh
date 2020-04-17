@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Containerizing MOADSD-NG"
+# Adapt the locations of MOADSD-NG and MOADSD-NG-SERVER if required
 LOCAL=~/moadsd-ng
 SERVER=~/moadsd-ng-server
 AWS=~/.aws

@@ -19,7 +19,7 @@ ARG WORKDIR=/home/${user}
 COPY add-apt-repository /usr/bin
 
 RUN apt update && \
-    apt install -y sudo vim jq figlet wget curl ssh python3 software-properties-common git locales-all libffi6 libffi-dev libssl-dev && \
+    apt install -y sudo vim nano jq figlet wget curl ssh python3 software-properties-common git locales-all libffi6 libffi-dev libssl-dev && \
     add-apt-repository universe && \
     apt update && \
     apt install -y python3-pip

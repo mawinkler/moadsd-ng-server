@@ -19,7 +19,7 @@ Requirements Docker for Desktop
 ### Cloud9
 Cloud9 Configuration:
 * Name: \<whatever-you-like\>
-* Instance type: >= t3.small
+* Instance type: >= t3.medium
 * Platform: Ubuntu Server 18.04-LTS
 
 From within the Cloud9 shell to a
@@ -30,76 +30,23 @@ sudo apt install -y docker-compose
 Requirements for Docker for Windows - untested
 
 ## Get the MOADSD-NG-SERVER
-Either download it directly from GitHub
-```
-https://github.com/mawinkler/moadsd-ng-server/archive/master.zip
-```
-or do a
+Do a
 ```shell
 git clone https://github.com/mawinkler/moadsd-ng-server.git
 ```
-## Prepare the Build
-The user inside the docker container is *unprivileged* but needs read / write access to the workfir on the host. To enable this access the uid and gid of the ansible user inside the container must match the uid and gid of the user on the host.
 
-First, find your current uid of your logged in user
-```shell
-# Example from a linux environment
-id
-```
-```
-uid=1001(ansible) gid=1001(ansible) groups=1001(ansible),118(docker)
-```
---> The ids to put into the `docker-compose.yaml` are `1001` and `1001`
-```
-    build:
-      context: .
-      args:
-        uid: 1001
-        gid: 1001
-```
-```shell
-# Example from a Mac OS X environment
-id
-```
-```
-uid=501(markus) gid=20(staff) groups=20(staff), ...
-```
---> The ids to put into the `docker-compose.yaml` are `501` and `20`
-```
-    build:
-      context: .
-      args:
-        uid: 501
-        gid: 20
-```
 ## Build
 To build the container image run
 ```shell
 ./build.sh
 ```
 This script will build the container image, fetch the generated `/home/ansible`-directory and finally populates the `./workdir`.
+The user inside the container is unprivileged but uses the same uid and gid as your hosts user.
 
 ## Get it up and Running
-Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, if you're alredy using MOADSD-NG, second when you're going to start from scratch.
+Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, when you're going to start from scratch, second if you're alredy using MOADSD-NG.
 
-### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
-If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. Otherwise skip this chapter and proceed with the `Run`-chapter. Then follow the steps below to create the credentials and logins with the available tool set within the moadsd-ng-server later on.
-
-**Migration**
-```shell
-./migrate.sh
-```
-
-**Run moadsd-ng-server**
-
-Run the server with
-```shell
-./start.sh
-```
-
-For more information on the moadsd-ng-server see the **House Keeping** chapter below.
-
-## Preparations Required when Starting from Scratch
+### Preparations Required when Starting from Scratch
 If you're starting from scratch you need to connect to your cloud account(s) now.
 
 **Run moadsd-ng-server**
@@ -199,7 +146,7 @@ Example for the default region would be `eu-central-1` or `eu-west-1`.
 
 When using windows instances within AWS EC2 we need to have an keypair to do an initial password change for the administrator. To create it do the following:
 ```shell
-aws ec2 create-key-pair --key-name moadsd-ng | \
+aws ec2 create-key-pair --key-name moadsd-ng-$(date '+%m%d%Y-%H%M%S') | \
   jq -r '.KeyMaterial' > ~/.ssh/moadsd-ng
 chmod 600 ~/.ssh/moadsd-ng
 ```
@@ -251,6 +198,23 @@ Please choose the playbook:
 #? 10
 ```
 The Configurator does quite a few checks on your configuration and will complain when a misconfiguration got detected.
+
+### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
+If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. The migration script assumes, that moadsd-ng and moadsd-ng-server are located on the same system. Maybe, you need to adapt the first two variables pointing to the exact location within the `migrate.sh`-script.
+
+**Migration**
+```shell
+./migrate.sh
+```
+
+**Run moadsd-ng-server**
+
+Run the server with
+```shell
+./start.sh
+```
+
+For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
 ## House Keeping
 Assuming you are within the `moadsd-ng-server`directory.
