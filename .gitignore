@@ -1,3 +1,4 @@
+.env
 workdir/
 ansible.tgz
 backup-*/

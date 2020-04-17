@@ -6,12 +6,11 @@ services:
 # ##########################################################################
   moadsd-ng-server:
     container_name: moadsd-ng-server
-    # image: moadsd-ng-server:latest
     build:
       context: .
       args:
-        uid: 1001
-        gid: 1001
+        uid: ${UID}
+        gid: ${GID}
     volumes:
       - ./workdir:/home/ansible
     environment:
@@ -21,3 +20,5 @@ services:
     tty: true
     restart: always
     network_mode: host
+
+# docker build --build-arg uid=$(id -u) --build-arg gid=$(id -g) -t moadsd-ng-server -f Dockerfile .
