@@ -150,9 +150,10 @@ Example for the default region would be `eu-central-1` or `eu-west-1`.
 
 When using windows instances within AWS EC2 we need to have an keypair to do an initial password change for the administrator. To create it do the following:
 ```shell
-aws ec2 create-key-pair --key-name moadsd-ng-$(date '+%m%d%Y-%H%M%S') | \
-  jq -r '.KeyMaterial' > ~/.ssh/moadsd-ng
-chmod 600 ~/.ssh/moadsd-ng
+KEY_NAME="moadsd-ng-$(date '+%m%d%Y-%H%M%S')"
+aws ec2 create-key-pair --key-name ${KEY_NAME} | \
+  jq -r '.KeyMaterial' > ~/.ssh/${KEY_NAME}
+chmod 600 ~/.ssh/${KEY_NAME}
 ```
 If AWS complains that the keypair already exists simply change the `--key-name moadsd-ng` to something different like `--key-name moadsd-ng-server`.
 We now have a private key which allows us to authenticate to the instances.
