@@ -30,6 +30,26 @@ From within the Cloud9 shell to a
 ```shell
 sudo apt install -y docker-compose
 ```
+
+Cloud9 requires a VPC with a public subnet available. If you don't have that within the desired region you need to create it before creating the Cloud9 instance.
+* Create a VPC
+  * Name tag: cloud9-vpc
+  * IPv4 CIDR block: 10.0.0.0/16
+  * IPv6 CIDR block: No
+  * Tenancy: Default
+* Create a Subnet
+  * Name tag: cloud9-subnet
+  * VPC: cloud9-vpc
+  * Availability Zone: No preference
+  * IPv4 CIDR block: 10.0.1.0/24
+* Create an Internet Gateway
+  * Name tag: cloud9-igw
+* Attach Internet Gateway to VPC
+  * VPC: cloud9-vpc
+* Modify Route Table --> Routes --> Edit routes --> Add route
+  * Destination 0.0.0.0/0
+  * Target: cloud9-igw
+
 ### Windows
 NOT SUPPORTED
 
@@ -37,6 +57,7 @@ NOT SUPPORTED
 Do a
 ```shell
 git clone https://github.com/mawinkler/moadsd-ng-server.git
+cd moadsd-ng-server
 ```
 
 ## Build
@@ -187,7 +208,7 @@ ansible-vault edit --vault-password-file \
 
 To change settings for your MOADSD-NG overwrite the values as required within your `configuration.yml` and rerun the configurator.
 
-To run the configurator call the menu of MOADSD-NG, select the cloud and choose configurator.
+To run the configurator call the menu of MOADSD-NG, select the cloud (in this example we're using AWS) and choose configurator.
 ```shell
 ./menu.sh
 Please choose the target environment:
@@ -203,6 +224,38 @@ Please choose the playbook:
 #? 10
 ```
 The Configurator does quite a few checks on your configuration and will complain when a misconfiguration got detected.
+
+If everything is fine you're now ready to create the MOADSD-NG environment and deploy the software stack. Do this by
+```shell
+./menu.sh
+Please choose the target environment:
+1) gcp          3) esx          5) switch_to_gcp    7) switch_to_esx
+2) aws          4) site_secrets 6) switch_to_aws
+#? 2
+Please choose the playbook:
+1) site                         6) pause
+2) deploy                       7) resume
+3) deploy_endpoints             8) terminate
+4) jenkins_create_credentials   9) terminate_site
+5) deploy_gitlab_runners        10) configurator
+#? 1
+```
+and
+```shell
+./menu.sh
+Please choose the target environment:
+1) gcp          3) esx          5) switch_to_gcp    7) switch_to_esx
+2) aws          4) site_secrets 6) switch_to_aws
+#? 2
+Please choose the playbook:
+1) site                         6) pause
+2) deploy                       7) resume
+3) deploy_endpoints             8) terminate
+4) jenkins_create_credentials   9) terminate_site
+5) deploy_gitlab_runners        10) configurator
+#? 2
+```
+
 
 ### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
 If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. The migration script assumes, that moadsd-ng and moadsd-ng-server are located on the same system. Maybe, you need to adapt the first two variables pointing to the exact location within the `migrate.sh`-script.
