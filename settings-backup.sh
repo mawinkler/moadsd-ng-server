@@ -22,9 +22,9 @@ cp ${WORK_DIR}/.vault-pass.txt ${BACKUP_DIR}/
 if test -d "${WORK_DIR}/${AWS}"; then
   cp -r ${WORK_DIR}/${AWS} ${BACKUP_DIR}/
 fi
-if test -f "${WORK_DIR}/.ssh/moadsd-ng"; then
-  cp ${WORK_DIR}/.ssh/moadsd-ng ${BACKUP_DIR}/.ssh/moadsd-ng
-fi
+# if test -f "${WORK_DIR}/.ssh/moadsd-ng\*"; then
+  cp ${WORK_DIR}/.ssh/moadsd-ng* ${BACKUP_DIR}/.ssh/
+# fi
 if test -d "${WORK_DIR}/moadsd-ng/site_aws"; then
   cp -r ${WORK_DIR}/moadsd-ng/site_aws ${BACKUP_DIR}/moadsd-ng/
 fi
