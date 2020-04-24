@@ -152,8 +152,8 @@ When using windows instances within AWS EC2 we need to have an keypair to do an 
 ```shell
 KEY_NAME="moadsd-ng-$(date '+%m%d%Y-%H%M%S')"
 aws ec2 create-key-pair --key-name ${KEY_NAME} | \
-  jq -r '.KeyMaterial' > ~/.ssh/${KEY_NAME}
-chmod 600 ~/.ssh/${KEY_NAME}
+  jq -r '.KeyMaterial' > ~/.ssh/${KEY_NAME}.pem
+chmod 600 ~/.ssh/${KEY_NAME}.pem
 ```
 If AWS complains that the keypair already exists simply change the `--key-name moadsd-ng` to something different like `--key-name moadsd-ng-server`.
 We now have a private key which allows us to authenticate to the instances.
@@ -193,7 +193,7 @@ To run the configurator call the menu of MOADSD-NG, select the cloud and choose 
 Please choose the target environment:
 1) gcp          3) esx          5) switch_to_gcp    7) switch_to_esx
 2) aws          4) site_secrets 6) switch_to_aws
-#? 1
+#? 2
 Please choose the playbook:
 1) site                         6) pause
 2) deploy                       7) resume
