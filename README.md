@@ -169,7 +169,7 @@ Default output format [None]: json
 ```
 Example for the default region would be `eu-central-1` or `eu-west-1`.
 
-When using windows instances within AWS EC2 we need to have an keypair to do an initial password change for the administrator. To create it do the following:
+When using instances within AWS EC2 we need to have an keypair. To create it do the following:
 ```shell
 KEY_NAME="moadsd-ng-$(date '+%m%d%Y-%H%M%S')"
 aws ec2 create-key-pair --key-name ${KEY_NAME} | \
