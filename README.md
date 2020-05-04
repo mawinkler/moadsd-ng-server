@@ -69,11 +69,6 @@ This script will build the container image, fetch the generated `/home/ansible`-
 The user inside the container is unprivileged but uses the same uid and gid as your hosts user.
 
 ## Get it up and Running
-Depending on whether you start from scratch or have already played with MOADSD-NG the following two chapters will guide you. First is applicable, when you're going to start from scratch, second if you're alredy using MOADSD-NG.
-
-### Preparations Required when Starting from Scratch
-If you're starting from scratch you need to connect to your cloud account(s) now.
-
 **Run moadsd-ng-server**
 
 First, run the server with
@@ -255,24 +250,6 @@ Please choose the playbook:
 5) deploy_gitlab_runners        10) configurator
 #? 2
 ```
-
-
-### Preexitsing MOADSD-NG, AWS and / or GCP Configuration Available
-If you already have played with MOADSD-NG and followed the Wiki or have AWS and / or GCP already setup on your host, you can easily reuse these configurations by copying them into the `workdir` of moadsd-ng-server. The migration script assumes, that moadsd-ng and moadsd-ng-server are located on the same system. Maybe, you need to adapt the first two variables pointing to the exact location within the `migrate.sh`-script.
-
-**Migration**
-```shell
-./migrate.sh
-```
-
-**Run moadsd-ng-server**
-
-Run the server with
-```shell
-./start.sh
-```
-
-For more information on the moadsd-ng-server see the **House Keeping** chapter below.
 
 ## House Keeping
 Assuming you are within the `moadsd-ng-server`directory.
