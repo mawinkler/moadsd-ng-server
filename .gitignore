@@ -2,3 +2,4 @@
 workdir/
 ansible.tgz
 backup-*/
+.DS_Store
