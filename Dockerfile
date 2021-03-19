@@ -20,6 +20,7 @@ COPY add-apt-repository /usr/bin
 
 RUN apt update && \
     apt install -y python3 python3-pip software-properties-common curl && \
+    pip3 install --upgrade pip && \
     add-apt-repository universe && \
     \
     # Google
