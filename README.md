@@ -1,4 +1,7 @@
-# moadsd-ng-server
+# MOADSD-NG-SERVER
+
+> ***Note:*** This project has reached the end of its development. Feel free to browse the code and the wiki, but if you're looking for a kubernetes or public cloud playground, please use other projects like [c1-playground](https://github.com/mawinkler/c1-playground) or the [multi cloud shell](https://github.com/mawinkler/mcs).
+
 This repository provides a server container image for MOADSD-NG. The core components of that image are:
 
 * Ansible running with Python3
